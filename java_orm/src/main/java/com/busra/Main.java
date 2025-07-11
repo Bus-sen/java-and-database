@@ -23,7 +23,15 @@ public class Main {
         String insertSql = "INSERT INTO users(name, email) VALUES(?,?) ";
          */
 
+        /* [JA-6]
         String readSql = "SELECT * FROM users";
+         */
+
+        /* [JA-7] - UPDATE
+        String updatedSql = "UPDATE users SET name=? WHERE id=?";
+         */
+
+        String deletedSql = "DELETE FROM users WHERE id = ?";
 
         try {
             DataBaseConnectorConfig.setConnection();
@@ -43,6 +51,7 @@ public class Main {
             preparedStatement.executeUpdate();
              */
 
+            /* [JA-6]
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(readSql);
             while (resultSet.next()) {
@@ -50,6 +59,19 @@ public class Main {
                 System.out.println("name: " + resultSet.getString("name"));
                 System.out.println("email: " + resultSet.getString("email"));
             }
+             */
+
+            /* [JA-7] - UPDATE
+            PreparedStatement preparedStatement = connection.prepareStatement(updatedSql);
+            preparedStatement.setString(1, "Ahmet Mete");
+            preparedStatement.setInt(2, 2);
+            preparedStatement.executeUpdate();
+             */
+
+            PreparedStatement preparedStatement = connection.prepareStatement(deletedSql);
+            preparedStatement.setInt(1,2);
+            preparedStatement.executeUpdate();
+
 
         } catch (Exception e) {
             throw new RuntimeException(e);
