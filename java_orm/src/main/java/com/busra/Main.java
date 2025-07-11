@@ -4,6 +4,7 @@ import com.busra.config.DataBaseConnectorConfig;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -18,7 +19,11 @@ public class Main {
                 "email VARCHAR(100))";
          */
 
+        /* [JA-5]
         String insertSql = "INSERT INTO users(name, email) VALUES(?,?) ";
+         */
+
+        String readSql = "SELECT * FROM users";
 
         try {
             DataBaseConnectorConfig.setConnection();
@@ -31,10 +36,20 @@ public class Main {
             System.out.println("Table created");
             */
 
+            /* [JA-5]
             PreparedStatement preparedStatement = connection.prepareStatement(insertSql);
             preparedStatement.setString(1, "Ali");
             preparedStatement.setString(2, "ali@mail.com");
             preparedStatement.executeUpdate();
+             */
+
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(readSql);
+            while (resultSet.next()) {
+                System.out.println("id: " + resultSet.getInt("id"));
+                System.out.println("name: " + resultSet.getString("name"));
+                System.out.println("email: " + resultSet.getString("email"));
+            }
 
         } catch (Exception e) {
             throw new RuntimeException(e);
