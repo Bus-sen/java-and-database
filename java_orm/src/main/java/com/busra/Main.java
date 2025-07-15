@@ -1,6 +1,8 @@
 package com.busra;
 
 import com.busra.config.DataBaseConnectorConfig;
+import com.busra.dao.UserDAOImpl;
+import com.busra.user.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,12 +33,24 @@ public class Main {
         String updatedSql = "UPDATE users SET name=? WHERE id=?";
          */
 
+        /* [JA-7] - DELETE
         String deletedSql = "DELETE FROM users WHERE id = ?";
+         */
+
 
         try {
             DataBaseConnectorConfig.setConnection();
             Connection connection = DataBaseConnectorConfig.getConnection();
             System.out.println("Connected");
+
+            UserDAOImpl userDAO = new UserDAOImpl(connection);
+            //userDAO.createTable();
+            /*
+            User user = new User(1, "Ahmet", "ahmet@mail.com");
+            userDAO.save(user);
+             */
+            userDAO.findAll();
+
 
             /* [JA-4]
             Statement statement = connection.createStatement();
@@ -68,13 +82,16 @@ public class Main {
             preparedStatement.executeUpdate();
              */
 
+            /* [JA-7] - DELETE
             PreparedStatement preparedStatement = connection.prepareStatement(deletedSql);
             preparedStatement.setInt(1,2);
             preparedStatement.executeUpdate();
+             */
 
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
     }
 }
