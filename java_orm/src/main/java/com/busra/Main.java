@@ -3,6 +3,9 @@ package com.busra;
 import com.busra.config.DataBaseConnectorConfig;
 import com.busra.dao.UserDAOImpl;
 import com.busra.user.User;
+import com.busra.util.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +16,11 @@ import java.sql.Statement;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.close();
+
 
         /* [JA-4]
         String sql = "CREATE TABLE IF NOT EXISTS users ("+
@@ -38,18 +46,20 @@ public class Main {
          */
 
 
-        try {
-            DataBaseConnectorConfig.setConnection();
-            Connection connection = DataBaseConnectorConfig.getConnection();
-            System.out.println("Connected");
+        //try {
+            //DataBaseConnectorConfig.setConnection();
+            //Connection connection = DataBaseConnectorConfig.getConnection();
+            //System.out.println("Connected");
 
-            UserDAOImpl userDAO = new UserDAOImpl(connection);
+            //UserDAOImpl userDAO = new UserDAOImpl(connection);
             //userDAO.createTable();
+
             /*
             User user = new User(1, "Ahmet", "ahmet@mail.com");
             userDAO.save(user);
              */
-            userDAO.findAll();
+
+            //userDAO.findAll();
 
 
             /* [JA-4]
@@ -88,10 +98,10 @@ public class Main {
             preparedStatement.executeUpdate();
              */
 
-
+/*
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
+*/
     }
 }
