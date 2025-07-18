@@ -24,13 +24,19 @@ public class Main {
 
         try {
             tx = session.beginTransaction();
-            Student student = new Student("Büşra","Şen");
-            session.persist(student);
+            //Student student = new Student("Büşra","Şen");
+            //session.persist(student);
 
+            /* [JA-15] + [JA-16]
             Student readStudent = session.byId(Student.class).load(student.getId());    //get()
             System.out.println(readStudent.getName());
+
             readStudent.setName("Ahmet");
             session.persist(readStudent);
+             */
+
+            Student deleteStudent = session.byId(Student.class).load("3");
+            session.remove(deleteStudent);  //delete()
 
             tx.commit();
         } catch (Exception e){
