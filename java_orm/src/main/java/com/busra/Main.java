@@ -29,6 +29,8 @@ public class Main {
 
             Student readStudent = session.byId(Student.class).load(student.getId());    //get()
             System.out.println(readStudent.getName());
+            readStudent.setName("Ahmet");
+            session.persist(readStudent);
 
             tx.commit();
         } catch (Exception e){
