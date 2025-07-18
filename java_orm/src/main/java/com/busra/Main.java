@@ -2,10 +2,12 @@ package com.busra;
 
 import com.busra.config.DataBaseConnectorConfig;
 import com.busra.dao.UserDAOImpl;
+import com.busra.model.Student;
 import com.busra.user.User;
 import com.busra.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,9 +19,16 @@ import java.sql.Statement;
 public class Main {
     public static void main(String[] args) {
 
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        session.close();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            Student student = new Student("Büşra","Şen");
+            session.persist(student);
+            tx.commit();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
 
         /* [JA-4]
