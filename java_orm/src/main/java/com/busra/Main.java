@@ -21,10 +21,15 @@ public class Main {
 
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
+
         try {
             tx = session.beginTransaction();
             Student student = new Student("Büşra","Şen");
             session.persist(student);
+
+            Student readStudent = session.byId(Student.class).load(student.getId());    //get()
+            System.out.println(readStudent.getName());
+
             tx.commit();
         } catch (Exception e){
             e.printStackTrace();
