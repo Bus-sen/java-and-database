@@ -35,11 +35,21 @@ public class Main {
             session.persist(readStudent);
              */
 
+            /* [JA-17]
             Student deleteStudent = session.byId(Student.class).load("3");
-            session.remove(deleteStudent);  //delete()
+            session.remove(deleteStudent);  //delete
+             */
 
+            Student student = new Student("John", "Doe");
+            session.persist(student);
+            if (student.getName() != "Büşra")
+                throw new IllegalArgumentException("Name is wrong");
             tx.commit();
-        } catch (Exception e){
+        } catch (Exception e) {
+            if (tx != null){
+                tx.rollback();
+                System.out.println("Roll back");
+            }
             e.printStackTrace();
         }
 
