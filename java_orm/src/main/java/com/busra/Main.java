@@ -1,8 +1,11 @@
 package com.busra;
 
 import com.busra.config.DataBaseConnectorConfig;
+import com.busra.dao.ProductDAO;
+import com.busra.dao.ProductDAOImpl;
 import com.busra.dao.UserDAOImpl;
 import com.busra.model.Student;
+import com.busra.service.ProductService;
 import com.busra.user.User;
 import com.busra.util.HibernateUtil;
 import org.hibernate.Session;
@@ -19,6 +22,15 @@ import java.sql.Statement;
 public class Main {
     public static void main(String[] args) {
 
+        ProductDAO productDAO = new ProductDAOImpl();
+        ProductService service = new ProductService(productDAO);
+        //service.insertProduct("Pencil",12.8);
+        //service.deleteProduct(3);
+        service.updateProduct(2,"Notebook",57.3);
+
+
+
+        System.out.println("--------------------------------"); // [JA-19] ve öncesi
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
 
@@ -40,15 +52,17 @@ public class Main {
             session.remove(deleteStudent);  //delete
              */
 
+            /* [JA-19]
             Student student = new Student("John", "Doe");
             session.persist(student);
             if (student.getName() != "Büşra")
                 throw new IllegalArgumentException("Name is wrong");
             tx.commit();
+             */
         } catch (Exception e) {
             if (tx != null){
                 tx.rollback();
-                System.out.println("Roll back");
+                //System.out.println("Roll back");
             }
             e.printStackTrace();
         }

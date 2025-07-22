@@ -22,5 +22,6 @@
 
         <!-- Entities -->
         <mapping class="com.busra.model.Student"/>
+        <mapping class="com.busra.model.Product"/>
     </session-factory>
 </hibernate-configuration>
